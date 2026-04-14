@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Aidesuka | Anime AI Detector",
+  title: "AIですか？",
   description:
     "UI prototype for uploading anime images and viewing AI detection results.",
 };

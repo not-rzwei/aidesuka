@@ -46,10 +46,12 @@ export type AnimeInferenceResult = {
   };
 };
 
-const MODEL_BASE = "/models";
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const MODEL_BASE = `${BASE_PATH}/models`;
 const MODEL_PATH = `${MODEL_BASE}/model_quantized.onnx`;
 const CONFIG_PATH = `${MODEL_BASE}/config.json`;
 const PREPROCESSOR_PATH = `${MODEL_BASE}/preprocessor_config.json`;
+const ORT_BASE = `${BASE_PATH}/ort`;
 
 let assetsPromise: Promise<RuntimeAssets> | null = null;
 let ortConfigured = false;
@@ -74,8 +76,14 @@ function configureOrt() {
   ort.env.wasm.numThreads = 1;
   ort.env.wasm.simd = true;
   ort.env.wasm.wasmPaths = {
-    wasm: new URL("/ort/ort-wasm-simd-threaded.wasm", window.location.origin),
-    mjs: new URL("/ort/ort-wasm-simd-threaded.mjs", window.location.origin),
+    wasm: new URL(
+      `${ORT_BASE}/ort-wasm-simd-threaded.wasm`,
+      window.location.origin,
+    ),
+    mjs: new URL(
+      `${ORT_BASE}/ort-wasm-simd-threaded.mjs`,
+      window.location.origin,
+    ),
   };
 
   ortConfigured = true;
